@@ -1,7 +1,6 @@
 package com.example.oop2025_week09.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 //College class will consume Student and Courses
 //CollegeManager: findCourseByCode(), findStudentById() -> IN EXAM
@@ -105,5 +104,20 @@ public class CollegeManager {
             str.append("\n");
         }
         return str.toString();
+    }
+    public Map<String, Integer> getCoursesRegistrationStats() {
+        Map<String, Integer> stats = new HashMap<>();
+
+        for (Course course : courses) {
+            int count = 0;
+            for (Student student : students) {
+                if (student.isRegisteredFor(course)) {
+                    count++;
+                }
+            }
+            stats.put(course.getCode(), count);
+        }
+
+        return stats;
     }
 }
