@@ -120,4 +120,12 @@ public class CollegeManager {
 
         return stats;
     }
+    public void setAllStudents(List<Student> students)
+    {
+        this.students = students;
+    }
+    public void setAllCourses(List<Course> courses)
+    {
+        this.courses = courses;
+    }
 }

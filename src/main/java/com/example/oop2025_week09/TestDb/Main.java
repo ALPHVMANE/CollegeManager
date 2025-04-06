@@ -1,56 +1,47 @@
 package com.example.oop2025_week09.TestDb;
 //we need maven (
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import com.example.oop2025_week09.db.DbUtil;
+
+import java.sql.*;
+
 public class Main {
     public static void main(String[] args) {
         Connection conn = null;
         try{
             conn = DbUtil.getConnection();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-    }
-}
-class DbUtil {
-    // JDBC URL for H2 database - creates/uses a file in user home directory
-    private static final String JDBC_URL = "jdbc:h2:~/collegemanager;DB_CLOSE_DELAY=-1";
-    private static final String USER = "sa";
-    private static final String PASSWORD = "";
+            Statement stmt = conn.createStatement();
+//            stmt.execute("DROP TABLE IF EXISTS students");
+//            System.out.println("Dropping table students");
+//            stmt.execute(   "CREATE TABLE IF NOT EXISTS students (" +
+//                    "  id INT PRIMARY KEY, " +
+//                    "  name VARCHAR(100) NOT NULL, " +
+//                    "  email VARCHAR(100) NOT NULL UNIQUE" +
+//                    ")"
+//            );
+//
+//            stmt.execute("INSERT INTO students VALUES (" +
+//                            "1001, 'Bobby Connolly', 'bob@bob.com')");
+//            stmt.execute("INSERT INTO students VALUES (" +
+//                            "1001, 'Bobby Connolly', 'bob@bob.com')");
 
+            System.out.println("Student record created");
 
-    // Static block to load the JDBC driver
-    static {
-        try {
-            Class.forName("org.h2.Driver");
-            System.out.println("H2 JDBC driver loaded successfully.");
-        } catch (ClassNotFoundException e) {
-            System.err.println("H2 JDBC Driver not found!");
-            e.printStackTrace();
-        }
-    }
+            ResultSet rs = stmt.executeQuery("select * from students");
 
-    /**
-     * Get a database connection
-     * @return a new database connection
-     * @throws SQLException if connection fails
-     */
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(JDBC_URL, USER, PASSWORD);
-    }
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String email = rs.getString(3);
 
-    /**
-     * Close a connection quietly (without throwing exceptions)
-     * @param connection the connection to close
-     */
-    public static void closeQuietly(Connection connection) {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                System.err.println("Error closing connection: " + e.getMessage());
+                System.out.println(id + " " + name + " " + email);
             }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
         }
+
+        System.out.println("Finished.");
+
     }
 }

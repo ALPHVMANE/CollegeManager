@@ -8,13 +8,13 @@ public class Course{
     private String title;
     private int credits;
     private String instructor;
-    Course(String code, String title) {
+    public Course(String code, String title) {
         this.code = code;
         this.title = title;
         this.credits = 0;
         this.instructor = "";
     }
-    Course(String code, String title, int credits, String instructor) {
+    public Course(String code, String title, int credits, String instructor) {
         this.code = code;
         this.title = title;
         this.credits = credits;

@@ -9,19 +9,19 @@ public class Student {
     private String email;
     private List<Course> registeredCourses;
 
-    Student(int id, String name) {
+    public Student(int id, String name) {
         this.id = id;
         this.name = name;
         this.email = "";
         this.registeredCourses = new ArrayList<Course>();
     }
-    Student(int id, String name, String email) {
+    public Student(int id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.registeredCourses = new ArrayList<>();
     }
-    Student(int id, String name, List<Course> registeredCourses) {
+    public Student(int id, String name, List<Course> registeredCourses) {
         this.id = id;
         this.name = name;
         this.registeredCourses = registeredCourses;

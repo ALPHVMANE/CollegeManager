@@ -61,7 +61,7 @@ public class CollegeManagerServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(); //creates a token that is specific and unique to the user
         CollegeManager manager = getCollegeManager(session);
 
         // Check if we're viewing a specific course
@@ -84,6 +84,7 @@ public class CollegeManagerServlet extends HttpServlet {
                 return;
             }
         }
+
         String action = request.getParameter("action");
         if ("searchStudents".equals(action)) {
             String query = request.getParameter("q");
@@ -198,6 +199,19 @@ public class CollegeManagerServlet extends HttpServlet {
         CollegeManager manager = (CollegeManager) session.getAttribute("collegeManager");
         if (manager == null) {
             manager = new CollegeManager(); // Ensure CollegeManager exists
+
+            Student alice = manager.addStudent("Alice Smith", "alice@example.com");
+            Student bob = manager.addStudent("Bob Johnson", "bob@example.com");
+
+            // Add some courses
+            Course javaCourse = manager.addCourse("CS101", "Introduction to Java", 3, "Dr. Java");
+            Course webDev = manager.addCourse("CS201", "Web Development", 4, "Prof. Web");
+
+            // Register students for courses
+            manager.registerStudenForCourse(alice.getId(), javaCourse.getCode());
+            manager.registerStudenForCourse(alice.getId(), webDev.getCode());
+            manager.registerStudenForCourse(bob.getId(), javaCourse.getCode());
+
             session.setAttribute("collegeManager", manager);
         }
         return manager;
